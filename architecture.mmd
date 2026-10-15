@@ -1,0 +1,9 @@
+flowchart TD
+    U[User / Browser] -->|Port 5000| W[Flask Web App]
+    W -->|Redis hits| R[Redis Cache]
+    W -->|Database queries| D[PostgreSQL]
+    D --> V[(Named Volume: pgdata)]
+
+    W -.->|Health endpoint: /health| H[Health Check]
+    D -.->|pg_isready| DH[Database Health Check]
+    R -.->|redis-cli ping| RH[Redis Health Check]
